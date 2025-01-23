@@ -36,8 +36,8 @@ function Login() {
     return (
         <>
             <div className="grid grid-cols-1 lg:grid-cols-2 
-                    h-screen place-items-center font-bold ">
-                <form className="flex justify-center items-center flex-col w-1/2 gap-4"
+                    h-screen place-items-center font-bold bg-sky-300 rounded-3xl" >
+                <form className="flex justify-center items-center flex-col w-2/3 gap-4 border-4 rounded-3xl p-10 border-black shadow-2xl"
                     onSubmit={login}>
                     <h2 className="text-slate-900 text-5xl ">Entrar</h2>
                     <div className="flex flex-col w-full">
@@ -46,8 +46,8 @@ function Login() {
                             type="text"
                             id="usuario"
                             name="usuario"
-                            placeholder="Usuario"
-                            className="border-2 border-slate-700 rounded p-2"
+                            placeholder="mail@mail.com.br"
+                            className="border-2 border-black rounded-2xl p-2"
                             value={usuarioLogin.usuario}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                         />
@@ -58,16 +58,16 @@ function Login() {
                             type="password"
                             id="senha"
                             name="senha"
-                            placeholder="Senha"
-                            className="border-2 border-slate-700 rounded p-2"
+                            placeholder="Digite aqui sua senha"
+                            className="border-2 border-black rounded-2xl p-2"
                             value={usuarioLogin.senha}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                         />
                     </div>
                     <button
                         type='submit'
-                        className="rounded bg-indigo-400 flex justify-center
-                                   hover:bg-indigo-900 text-white w-1/2 py-2">
+                        className="rounded-2xl bg-sky-700 flex justify-center
+                                   hover:bg-sky-950 text-white w-1/2 py-2">
                                     
                         {isLoading ? <RotatingLines
                             strokeColor="black"
@@ -84,12 +84,15 @@ function Login() {
 
                     <p>
                         Ainda não tem uma conta?{' '}
-                        <Link to="/cadastro" className="text-indigo-800 hover:underline">
+                        <Link to="/cadastro" className="text-sky-800 hover:underline hover:text-sky-950">
                             Cadastre-se
                         </Link>
                     </p>
                 </form>
-                <div className="fundoLogin hidden lg:block"></div>
+                <div className='flex flex-col items-center hover:scale-110'>
+                    <p className='justify-center font-mono font-bold text-4xl '>SURF NESSE MAR DE IDEIAS</p>
+                    <img  src="https://ik.imagekit.io/ix39wusls/Onda%20Blog.svg?updatedAt=1737507939376" alt="Logo login" className='' />
+                </div>
             </div>
         </>
     );
