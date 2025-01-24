@@ -1,78 +1,86 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Usuario from '../../models/Usuario'
-import { cadastrarUsuario } from '../../services/Service'
-import './Cadastro.css'
-import { RotatingLines } from 'react-loader-spinner'
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import Usuario from "../../models/Usuario";
+import { cadastrarUsuario } from "../../services/Service";
+import "./Cadastro.css";
+import { RotatingLines } from "react-loader-spinner";
 
 function Cadastro() {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-  
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const[confirmaSenha, setConfirmaSenha] = useState<string>("")
+  const [confirmaSenha, setConfirmaSenha] = useState<string>("");
 
   const [usuario, setUsuario] = useState<Usuario>({
     id: 0,
-    nome: '',
-    usuario: '',
-    senha: '',
-    foto: ''
-  })
-  
-  useEffect(() => {
-    if (usuario.id !== 0){
-      retornar()
-    }
-  }, [usuario])
+    nome: "",
+    usuario: "",
+    senha: "",
+    foto: "",
+  });
 
-  function retornar(){
-    navigate('/login')
+  useEffect(() => {
+    if (usuario.id !== 0) {
+      retornar();
+    }
+  }, [usuario]);
+
+  function retornar() {
+    navigate("/login");
   }
 
-  function atualizarEstado(e: ChangeEvent<HTMLInputElement>){
+  function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     setUsuario({
       ...usuario,
-      [e.target.name]: e.target.value
-    })
-
+      [e.target.name]: e.target.value,
+    });
   }
 
-  function handleConfirmarSenha(e: ChangeEvent<HTMLInputElement>){
-    setConfirmaSenha(e.target.value)
+  function handleConfirmarSenha(e: ChangeEvent<HTMLInputElement>) {
+    setConfirmaSenha(e.target.value);
   }
 
-  async function cadastrarNovoUsuario(e: FormEvent<HTMLFormElement>){
-    e.preventDefault()
+  async function cadastrarNovoUsuario(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
-    if(confirmaSenha === usuario.senha && usuario.senha.length >= 8){
+    if (confirmaSenha === usuario.senha && usuario.senha.length >= 8) {
+      setIsLoading(true);
 
-      setIsLoading(true)
-
-      try{
-        await cadastrarUsuario(`/usuarios/cadastrar`, usuario, setUsuario)
-        alert('Usuário cadastrado com sucesso!')
-      }catch(error){
-        alert('Erro ao cadastrar o usuário!')
+      try {
+        await cadastrarUsuario(`/usuarios/cadastrar`, usuario, setUsuario);
+        alert("Usuário cadastrado com sucesso!");
+      } catch (error) {
+        alert("Erro ao cadastrar o usuário!");
       }
-    }else{
-      alert('Dados do usuário inconsistentes! Verifique as informações do cadastro.')
-      setUsuario({...usuario, senha: ''})
-      setConfirmaSenha('')
+    } else {
+      alert(
+        "Dados do usuário inconsistentes! Verifique as informações do cadastro."
+      );
+      setUsuario({ ...usuario, senha: "" });
+      setConfirmaSenha("");
     }
 
-    setIsLoading(false)
+    setIsLoading(false);
   }
-  
+
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 h-screen 
-            place-items-center font-bold bg-yellow-400">
-        <div className="fundoCadastro hidden lg:block"></div>
-        <form className='flex justify-center items-center flex-col w-2/3 gap-3' 
-          onSubmit={cadastrarNovoUsuario}>
-          <h2 className='text-slate-900 text-5xl'>Cadastrar</h2>
+      <div
+        className="grid grid-cols-1 lg:grid-cols-2 h-screen 
+            place-items-center font-bold bg-sky-300 rounded-3xl"
+      >
+        <div className="w-full h-full ">
+          <img className="rounded-l-3xl h-full"
+            src="https://img.freepik.com/fotos-gratis/foto-hipnotizante-de-ondas-do-oceano-azul-cristalino_181624-48854.jpg?t=st=1737632834~exp=1737636434~hmac=769c744788302e454104b9b043dcc3c39b4fbccecd1d96b0728004954980301c&w=996"
+            alt="Foto Oceano"
+          />
+        </div>
+        <form
+          className="flex justify-center items-center flex-col w-2/3 gap-3 border-4 p-10 rounded-3xl border-black shadow-2xl"
+          onSubmit={cadastrarNovoUsuario}
+        >
+          <h2 className="text-slate-900 text-5xl">Cadastrar</h2>
           <div className="flex flex-col w-full">
             <label htmlFor="nome">Nome</label>
             <input
@@ -80,9 +88,11 @@ function Cadastro() {
               id="nome"
               name="nome"
               placeholder="Nome"
-              className="border-2 border-slate-700 rounded p-2"
-             value = {usuario.nome}
-             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+              className="rounded-2xl border-black border-2 p-2"
+              value={usuario.nome}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                atualizarEstado(e)
+              }
             />
           </div>
           <div className="flex flex-col w-full">
@@ -92,9 +102,11 @@ function Cadastro() {
               id="usuario"
               name="usuario"
               placeholder="Endereço de Email"
-              className="border-2 border-slate-700 rounded p-2"
-              value = {usuario.usuario}
-             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+              className="rounded-2xl border-black border-2 p-2"
+              value={usuario.usuario}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                atualizarEstado(e)
+              }
             />
           </div>
           <div className="flex flex-col w-full">
@@ -104,9 +116,11 @@ function Cadastro() {
               id="foto"
               name="foto"
               placeholder="Link para Foto"
-              className="border-2 border-slate-700 rounded p-2"
-              value = {usuario.foto}
-             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+              className="rounded-2xl border-black border-2 p-2"
+              value={usuario.foto}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                atualizarEstado(e)
+              }
             />
           </div>
           <div className="flex flex-col w-full">
@@ -116,9 +130,11 @@ function Cadastro() {
               id="senha"
               name="senha"
               placeholder="Senha"
-              className="border-2 border-slate-700 rounded p-2"
-              value = {usuario.senha}
-             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+              className="rounded-2xl border-black border-2 p-2"
+              value={usuario.senha}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                atualizarEstado(e)
+              }
             />
           </div>
           <div className="flex flex-col w-full">
@@ -128,38 +144,44 @@ function Cadastro() {
               id="confirmarSenha"
               name="confirmarSenha"
               placeholder="Confirmar Senha"
-              className="border-2 border-slate-700 rounded p-2"
+              className="rounded-2xl border-black border-2 p-2"
               value={confirmaSenha}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleConfirmarSenha(e)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                handleConfirmarSenha(e)
+              }
             />
           </div>
           <div className="flex justify-around w-full gap-8">
-            <button className='rounded text-white bg-red-400 
-                  hover:bg-red-700 w-1/2 py-2' onClick={retornar}>
+            <button
+              className="rounded-2xl text-white bg-red-400 
+                  hover:bg-red-700 w-1/2 py-2"
+              onClick={retornar}
+            >
               Cancelar
             </button>
-            <button 
-                type='submit'
-                className='rounded text-white bg-indigo-400 
-                           hover:bg-indigo-900 w-1/2 py-2
-                           flex justify-center' 
-                >
-                  {isLoading ? <RotatingLines
-                    strokeColor="white"
-                    strokeWidth="5"
-                    animationDuration="0.75"
-                    width="24"
-                    visible={true}
-                  /> :
-                    <span>Cadastrar</span>
-                  }
-              
+            <button
+              type="submit"
+              className="rounded-2xl text-white  bg-sky-700 
+                           hover:bg-sky-950 w-1/2 py-2
+                           flex justify-center"
+            >
+              {isLoading ? (
+                <RotatingLines
+                  strokeColor="white"
+                  strokeWidth="5"
+                  animationDuration="0.75"
+                  width="24"
+                  visible={true}
+                />
+              ) : (
+                <span>Cadastrar</span>
+              )}
             </button>
           </div>
         </form>
       </div>
     </>
-  )
+  );
 }
 
-export default Cadastro
+export default Cadastro;

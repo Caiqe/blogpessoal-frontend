@@ -6,6 +6,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { buscar } from "../../../services/Service";
 import { DNA } from "react-loader-spinner";
 
+
 function ListaPostagens() {
   const navigate = useNavigate();
 
@@ -57,6 +58,9 @@ function ListaPostagens() {
                 ))}
 
             </div>
+            
+           
+
         </>
     );
 }

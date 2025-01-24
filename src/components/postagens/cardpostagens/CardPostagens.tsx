@@ -14,7 +14,11 @@ function CardPostagens({ postagem }: CardPostagensProps) {
       <div>
         <div className="flex w-full bg-sky-700 py-2 px-4 items-center gap-4">
           <img
-            src={postagem.usuario?.foto}
+            src={
+              postagem.usuario?.foto === undefined || " "
+                ? "https://ik.imagekit.io/ix39wusls/fotoUsuario?updatedAt=1737721915469"
+                : postagem.usuario?.foto
+            }
             className="h-12 rounded-full"
             alt={postagem.usuario?.nome}
           />
@@ -22,8 +26,10 @@ function CardPostagens({ postagem }: CardPostagensProps) {
             {postagem.usuario?.nome}
           </h3>
         </div>
-        <div className="p-4 ">
-          <h4 className="text-lg font-semibold uppercase">{postagem.titulo}</h4>
+        <div className="p-4  bg-sky-300">
+          <h4 className="text-lg font-semibold uppercase ">
+            {postagem.titulo}
+          </h4>
           <p>{postagem.texto}</p>
           <p>Tema: {postagem.tema?.descricao}</p>
           <p>
@@ -38,7 +44,7 @@ function CardPostagens({ postagem }: CardPostagensProps) {
       <div className="flex">
         <Link
           to={`/editarpostagem/${postagem.id}`}
-          className="w-full text-slate-100 bg-indigo-400 hover:bg-indigo-800 
+          className="w-full text-slate-100 bg-sky-400 hover:bg-sky-950 
     flex items-center justify-center py-2"
         >
           <button>Editar</button>

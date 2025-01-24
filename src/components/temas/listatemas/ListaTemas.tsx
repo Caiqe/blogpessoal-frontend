@@ -49,9 +49,14 @@ function ListaTemas() {
             wrapperClass="dna-wrapper mx-auto"
         />
         )}
-      <div className="flex justify-center w-full my-4">
-        <div className="container flex flex-col">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="flex justify-center w-full my-4 ">
+        <div className="container flex flex-col ">
+          <div className=" flex flex-col items-center w-full bg-sky-700 rounded-full">
+            <h1 className="font-mono font-semibold text-3xl text-white">Todos os Temas:</h1>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
+            
             {temas.map((tema) => (
               <CardTemas key={tema.id} tema={tema} />
             ))}
