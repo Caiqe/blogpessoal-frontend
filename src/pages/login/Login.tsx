@@ -1,0 +1,101 @@
+import { Link, useNavigate } from 'react-router-dom';
+import './Login.css';
+import { AuthContext } from '../../contexts/AuthContext';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import UsuarioLogin from '../../models/UsuarioLogin';
+import { RotatingLines } from 'react-loader-spinner';
+
+function Login() {
+
+    const navigate = useNavigate();
+
+    const { usuario, handleLogin, isLoading } = useContext(AuthContext)
+
+    const [usuarioLogin, setUsuarioLogin] = useState<UsuarioLogin>(
+        {} as UsuarioLogin
+    )
+
+    useEffect(() => {
+        if (usuario.token !== "") {
+            navigate('/home')
+        }
+    }, [usuario])
+
+    function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+        setUsuarioLogin({
+            ...usuarioLogin,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    function login(e: ChangeEvent<HTMLFormElement>) {
+        e.preventDefault()
+        handleLogin(usuarioLogin)
+    }
+
+    return (
+        <>
+            <div className="grid grid-cols-1 lg:grid-cols-2 
+                    h-screen place-items-center font-bold bg-sky-300 rounded-3xl" >
+                <form className="flex justify-center items-center flex-col w-2/3 gap-4 border-4 rounded-3xl p-10 border-black shadow-2xl"
+                    onSubmit={login}>
+                    <h2 className="text-slate-900 text-5xl ">Entrar</h2>
+                    <div className="flex flex-col w-full">
+                        <label htmlFor="usuario">Usuário</label>
+                        <input
+                            type="text"
+                            id="usuario"
+                            name="usuario"
+                            placeholder="mail@mail.com.br"
+                            className="border-2 border-black rounded-2xl p-2"
+                            value={usuarioLogin.usuario}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+                        />
+                    </div>
+                    <div className="flex flex-col w-full">
+                        <label htmlFor="senha">Senha</label>
+                        <input
+                            type="password"
+                            id="senha"
+                            name="senha"
+                            placeholder="Digite aqui sua senha"
+                            className="border-2 border-black rounded-2xl p-2"
+                            value={usuarioLogin.senha}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+                        />
+                    </div>
+                    <button
+                        type='submit'
+                        className="rounded-2xl bg-sky-700 flex justify-center
+                                   hover:bg-sky-950 text-white w-1/2 py-2">
+                                    
+                        {isLoading ? <RotatingLines
+                            strokeColor="black"
+                            strokeWidth="5"
+                            animationDuration="0.75"
+                            width="24"
+                            visible={true}
+                        /> :
+                            <span>Entrar</span>
+                        }
+                    </button>
+
+                    <hr className="border-slate-800 w-full" />
+
+                    <p>
+                        Ainda não tem uma conta?{' '}
+                        <Link to="/cadastro" className="text-sky-800 hover:underline hover:text-sky-950">
+                            Cadastre-se
+                        </Link>
+                    </p>
+                </form>
+                <div className='flex flex-col items-center hover:scale-110'>
+                    <p className='justify-center font-mono font-bold text-4xl '>SURF NESSE MAR DE IDEIAS</p>
+                    <img  src="https://ik.imagekit.io/ix39wusls/Onda%20Blog.svg?updatedAt=1737507939376" alt="Logo login" className='' />
+                </div>
+            </div>
+        </>
+    );
+}
+
+export default Login;
