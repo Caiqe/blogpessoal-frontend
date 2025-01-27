@@ -15,7 +15,7 @@ function CardPostagens({ postagem }: CardPostagensProps) {
         <div className="flex w-full bg-sky-700 py-2 px-4 items-center gap-4">
           <img
             src={
-              postagem.usuario?.foto === undefined || " "
+              postagem.usuario?.foto.length === undefined ||postagem.usuario?.foto.length <10
                 ? "https://ik.imagekit.io/ix39wusls/fotoUsuario?updatedAt=1737721915469"
                 : postagem.usuario?.foto
             }
