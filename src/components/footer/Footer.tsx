@@ -15,7 +15,7 @@ function Footer() {
       <div className="flex justify-center bg-sky-700 text-white rounded-t-3xl mt-4">
         <div className="container flex flex-col items-center py-4">
           <p className="text-xl font-bold font-mono pb-2">
-            Desenvolvidor por Caique Gomes 🧑🏻‍💻 | Copyright: {data}
+            Desenvolvido por Caique Gomes 🧑🏻‍💻 | Copyright: {data}
           </p>
           
           <div className="flex gap-4 bg-sky-950 px-4 py-1 rounded-3xl">
